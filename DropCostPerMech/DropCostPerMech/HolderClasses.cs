@@ -6,6 +6,7 @@
         public int cbillsPerTon = 500;
         public bool someFreeTonnage = false;
         public int freeTonnageAmount = 0;
+        public bool NewAlgorithm = false;
     }
 
     public class Fields {

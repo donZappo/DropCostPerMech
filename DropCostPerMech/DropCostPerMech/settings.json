@@ -1,7 +1,8 @@
 {
     "percentageOfMechCost" : 0.0025,
-    "CostByTons" : false,
-    "cbillsPerTon" : 500,
-    "someFreeTonnage" : false,
-    "freeTonnageAmount" : 0
+    "CostByTons" : true,
+    "cbillsPerTon" : 962,
+    "someFreeTonnage" : true,
+    "freeTonnageAmount" : 100,
+	"NewAlgorithm" : true,
 }

@@ -33,8 +33,12 @@ namespace DropCostPerMech {
                 Settings settings = Helper.LoadSettings();
 
                 string missionObjectiveResultString = $"DROP COSTS DEDUCTED: ¢{Fields.FormattedDropCost}";
-                if (settings.CostByTons) {
+                if (settings.CostByTons && !settings.NewAlgorithm) {
                     missionObjectiveResultString += $"{Environment.NewLine}AFTER {settings.freeTonnageAmount} TON CREDIT WORTH ¢{string.Format("{0:n0}", settings.freeTonnageAmount * settings.cbillsPerTon)}";
+                }
+                else if (settings.CostByTons && settings.NewAlgorithm)
+                {
+                    missionObjectiveResultString += $"{Environment.NewLine}AFTER {settings.freeTonnageAmount} TON CREDIT WORTH ¢{string.Format("{0:n0}", (settings.freeTonnageAmount - settings.cbillsPerTon) * (settings.freeTonnageAmount - settings.cbillsPerTon) * settings.cbillsPerTon / settings.cbillsPerTon)}";
                 }
                 MissionObjectiveResult missionObjectiveResult = new MissionObjectiveResult(missionObjectiveResultString, "7facf07a-626d-4a3b-a1ec-b29a35ff1ac0", false, true, ObjectiveStatus.Succeeded, false);
                 ReflectionHelper.InvokePrivateMethode(__instance, "AddObjective", new object[] { missionObjectiveResult });
@@ -81,9 +85,21 @@ namespace DropCostPerMech {
                             lanceTonnage += (int)def.Chassis.Tonnage;
                         }
                     }
-                    if (settings.CostByTons && settings.someFreeTonnage) {
+                    if (settings.CostByTons && settings.someFreeTonnage && !settings.NewAlgorithm) {
                         freeTonnageText = $"({settings.freeTonnageAmount} TONS FREE)";
                         dropCost = Math.Max(0f, (lanceTonnage - settings.freeTonnageAmount) * settings.cbillsPerTon);
+                    }
+                    else if (settings.CostByTons && settings.someFreeTonnage && settings.NewAlgorithm)
+                    {
+                        freeTonnageText = $"({settings.freeTonnageAmount} TONS FREE)";
+                        if(lanceTonnage >= settings.freeTonnageAmount)
+                        {
+                            dropCost = (lanceTonnage - settings.freeTonnageAmount)*(lanceTonnage - settings.freeTonnageAmount) * settings.cbillsPerTon/settings.freeTonnageAmount;
+                        }
+                        else
+                        {
+                            dropCost = 0;
+                        }
                     }
 
                     string formattedDropCost = string.Format("{0:n0}", dropCost);
