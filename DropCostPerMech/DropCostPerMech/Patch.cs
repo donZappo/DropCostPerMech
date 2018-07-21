@@ -36,10 +36,6 @@ namespace DropCostPerMech {
                 if (settings.CostByTons && !settings.NewAlgorithm) {
                     missionObjectiveResultString += $"{Environment.NewLine}AFTER {settings.freeTonnageAmount} TON CREDIT WORTH ¢{string.Format("{0:n0}", settings.freeTonnageAmount * settings.cbillsPerTon)}";
                 }
-                else if (settings.CostByTons && settings.NewAlgorithm)
-                {
-                    missionObjectiveResultString += $"{Environment.NewLine}AFTER {settings.freeTonnageAmount} TON CREDIT WORTH ¢{string.Format("{0:n0}", (settings.freeTonnageAmount - settings.cbillsPerTon) * (settings.freeTonnageAmount - settings.cbillsPerTon) * settings.cbillsPerTon / settings.cbillsPerTon)}";
-                }
                 MissionObjectiveResult missionObjectiveResult = new MissionObjectiveResult(missionObjectiveResultString, "7facf07a-626d-4a3b-a1ec-b29a35ff1ac0", false, true, ObjectiveStatus.Succeeded, false);
                 ReflectionHelper.InvokePrivateMethode(__instance, "AddObjective", new object[] { missionObjectiveResult });
             }
