@@ -24,23 +24,33 @@ namespace DropCostPerMech {
             Helper.LoadState(save.InstanceGUID, save.SaveTime);
         }
     }
-
+    
     [HarmonyPatch(typeof(AAR_ContractObjectivesWidget), "FillInObjectives")]
     public static class AAR_ContractObjectivesWidget_FillInObjectives {
 
         static void Postfix(AAR_ContractObjectivesWidget __instance) {
-            try {
-                Settings settings = Helper.LoadSettings();
+            var consumedMilestones = Traverse.Create(UnityGameInstance.BattleTechGame.Simulation)
+                .Field("ConsumedMilestones").GetValue<List<string>>();
+            var consumed = consumedMilestones.Contains("milestone_111_talk_rentToOwn");
 
-                string missionObjectiveResultString = $"DROP COSTS DEDUCTED: ¢{Fields.FormattedDropCost}";
-                if (settings.CostByTons && !settings.NewAlgorithm) {
-                    missionObjectiveResultString += $"{Environment.NewLine}AFTER {settings.freeTonnageAmount} TON CREDIT WORTH ¢{string.Format("{0:n0}", settings.freeTonnageAmount * settings.cbillsPerTon)}";
+            if (consumed)
+            {
+                try
+                {
+                    Settings settings = Helper.LoadSettings();
+
+                    string missionObjectiveResultString = $"DROP COSTS DEDUCTED: ¢{Fields.FormattedDropCost}";
+                    if (settings.CostByTons && !settings.NewAlgorithm)
+                    {
+                        missionObjectiveResultString += $"{Environment.NewLine}AFTER {settings.freeTonnageAmount} TON CREDIT WORTH ¢{string.Format("{0:n0}", settings.freeTonnageAmount * settings.cbillsPerTon)}";
+                    }
+                    MissionObjectiveResult missionObjectiveResult = new MissionObjectiveResult(missionObjectiveResultString, "7facf07a-626d-4a3b-a1ec-b29a35ff1ac0", false, true, ObjectiveStatus.Succeeded, false);
+                    ReflectionHelper.InvokePrivateMethode(__instance, "AddObjective", new object[] { missionObjectiveResult });
                 }
-                MissionObjectiveResult missionObjectiveResult = new MissionObjectiveResult(missionObjectiveResultString, "7facf07a-626d-4a3b-a1ec-b29a35ff1ac0", false, true, ObjectiveStatus.Succeeded, false);
-                ReflectionHelper.InvokePrivateMethode(__instance, "AddObjective", new object[] { missionObjectiveResult });
-            }
-            catch (Exception e) {
-                Logger.LogError(e);
+                catch (Exception e)
+                {
+                    Logger.LogError(e);
+                }
             }
         }
     }
@@ -49,12 +59,22 @@ namespace DropCostPerMech {
     public static class Contract_CompleteContract {
 
         static void Postfix(Contract __instance) {
-            try {
-                int newMoneyResults = Mathf.FloorToInt(__instance.MoneyResults - Fields.DropCost);
-                ReflectionHelper.InvokePrivateMethode(__instance, "set_MoneyResults", new object[] { newMoneyResults });
-            }
-            catch (Exception e) {
-                Logger.LogError(e);
+            var consumedMilestones = Traverse.Create(UnityGameInstance.BattleTechGame.Simulation)
+                .Field("ConsumedMilestones").GetValue<List<string>>();
+            var consumed = consumedMilestones.Contains("milestone_111_talk_rentToOwn");
+            Settings settings = Helper.LoadSettings();
+
+            if (consumed || !settings.IsCampaign)
+            {
+                try
+                {
+                    int newMoneyResults = Mathf.FloorToInt(__instance.MoneyResults - Fields.DropCost);
+                    ReflectionHelper.InvokePrivateMethode(__instance, "set_MoneyResults", new object[] { newMoneyResults });
+                }
+                catch (Exception e)
+                {
+                    Logger.LogError(e);
+                }
             }
         }
     }

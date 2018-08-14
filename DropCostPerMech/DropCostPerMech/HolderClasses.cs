@@ -7,6 +7,7 @@
         public bool someFreeTonnage = false;
         public int freeTonnageAmount = 0;
         public bool NewAlgorithm = false;
+        public bool IsCampaign = true;
     }
 
     public class Fields {
