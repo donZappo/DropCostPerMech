@@ -19,6 +19,7 @@ namespace DropCostPerMech
         }
     }
 
+
     [HarmonyPatch(typeof(GameInstance), "Load")]
     public static class GameInstance_Load_Patch {
         static void Prefix(GameInstanceSave save) {
