@@ -33,10 +33,8 @@ namespace DropCostPerMech
             var consumedMilestones = Traverse.Create(UnityGameInstance.BattleTechGame.Simulation)
                 .Field("ConsumedMilestones").GetValue<List<string>>();
             var consumed = consumedMilestones.Contains("milestone_111_talk_rentToOwn");
-            if (UnityGameInstance.BattleTechGame.Simulation.IsCareerMode())
-                consumed = true;
 
-            if (consumed)
+            if (consumed || UnityGameInstance.BattleTechGame.Simulation.IsCareerMode())
             {
                 try
                 {
@@ -67,7 +65,7 @@ namespace DropCostPerMech
             var consumed = consumedMilestones.Contains("milestone_111_talk_rentToOwn");
             Settings settings = Helper.LoadSettings();
 
-            if (consumed || !settings.IsCampaign)
+            if (consumed || UnityGameInstance.BattleTechGame.Simulation.IsCareerMode())
             {
                 try
                 {
