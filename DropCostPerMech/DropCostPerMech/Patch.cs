@@ -46,7 +46,7 @@ namespace DropCostPerMech
                 {
                     try
                     {
-                        Settings settings = Helper.LoadSettings();
+                        var settings = DropCostPerMech.Settings;
 
                         string missionObjectiveResultString = $"DROP COSTS DEDUCTED: ¢{Fields.FormattedDropCost}";
                         if (settings.CostByTons && !settings.NewAlgorithm)
@@ -58,7 +58,7 @@ namespace DropCostPerMech
                     }
                     catch (Exception e)
                     {
-                        Logger.LogError(e);
+                        Logger.Error(e);
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace DropCostPerMech
                 var consumedMilestones = Traverse.Create(UnityGameInstance.BattleTechGame.Simulation)
                 .Field("ConsumedMilestones").GetValue<List<string>>();
                 var consumed = consumedMilestones.Contains("milestone_111_talk_rentToOwn");
-                Settings settings = Helper.LoadSettings();
+                var settings = DropCostPerMech.Settings;
 
                 if (consumed || UnityGameInstance.BattleTechGame.Simulation.IsCareerMode())
                 {
@@ -86,7 +86,7 @@ namespace DropCostPerMech
                     }
                     catch (Exception e)
                     {
-                        Logger.LogError(e);
+                        Logger.Error(e);
                     }
                 }
             }
@@ -101,7 +101,7 @@ namespace DropCostPerMech
             {
                 try
                 {
-                    Settings settings = Helper.LoadSettings();
+                    var settings = DropCostPerMech.Settings;
                     string freeTonnageText = "";
 
                     LanceConfiguratorPanel LC = (LanceConfiguratorPanel)ReflectionHelper.GetPrivateField(__instance, "LC");
@@ -156,7 +156,7 @@ namespace DropCostPerMech
                 }
                 catch (Exception e)
                 {
-                    Logger.LogError(e);
+                    Logger.Error(e);
                 }
             }
         }
