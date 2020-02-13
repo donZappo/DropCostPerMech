@@ -36,7 +36,7 @@ namespace DropCostPerMech
 
         static void Postfix(AAR_ContractObjectivesWidget __instance)
         {
-            if (UnityGameInstance.BattleTechGame.Simulation != null && UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == 42)
+            if (UnityGameInstance.BattleTechGame.Simulation != null)
             {
                 var consumedMilestones = Traverse.Create(UnityGameInstance.BattleTechGame.Simulation)
                 .Field("ConsumedMilestones").GetValue<List<string>>();
@@ -70,7 +70,7 @@ namespace DropCostPerMech
 
         static void Postfix(Contract __instance)
         {
-            if (UnityGameInstance.BattleTechGame.Simulation != null && UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == 42)
+            if (UnityGameInstance.BattleTechGame.Simulation != null)
             {
                 var consumedMilestones = Traverse.Create(UnityGameInstance.BattleTechGame.Simulation)
                 .Field("ConsumedMilestones").GetValue<List<string>>();
@@ -97,7 +97,7 @@ namespace DropCostPerMech
     public static class LanceHeaderWidget_RefreshLanceInfo {    
         static void Postfix(LanceHeaderWidget __instance, List<MechDef> mechs)
         {
-            if (UnityGameInstance.BattleTechGame.Simulation != null && UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == 42)
+            if (UnityGameInstance.BattleTechGame.Simulation != null)
             {
                 try
                 {

@@ -23,6 +23,7 @@ namespace DropCostPerMech {
             property.SetValue(instance, value, null);
         }
 
+
         public static void SetPrivateField(object instance, string fieldname, object value) {
             Type type = instance.GetType();
             FieldInfo field = type.GetField(fieldname, BindingFlags.NonPublic | BindingFlags.Instance);
