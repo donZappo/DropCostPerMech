@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DropCostPerMech</RootNamespace>
     <AssemblyName>DropCostPerMech</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,14 +30,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Managed\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\..\..\References\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>C:\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\References\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Dapper.Unity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -46,8 +48,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\References\DOTweenPro.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>C:\Managed\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,11 +57,20 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>C:\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\..\..\..\..\..\..\References\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\..\..\..\References\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
-      <HintPath>C:\Managed\UnityEngine.Networking.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\References\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreModule">
+      <HintPath>..\..\..\..\..\..\..\References\UnityEngine.TextCoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\..\..\..\References\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -71,6 +82,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="HolderClasses.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="ModSettings.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReflectionHelper.cs" />
@@ -78,12 +90,14 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="settings.json" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BATTLETECH\Mods\DropCostPerMech" /Y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
