@@ -127,7 +127,7 @@ namespace DropCostPerMech
 
                     TextMeshProUGUI simLanceTonnageText = (TextMeshProUGUI)ReflectionHelper.GetPrivateField(__instance, "simLanceTonnageText");
                     // longer strings interfere with messages about incorrect lance configurations
-                    simLanceTonnageText.text = $"DROP COST: ¢{Fields.FormattedDropCost}   LANCE WEIGHT: {Fields.LanceTonnage} TONS {Fields.FreeTonnageText}";
+                    simLanceTonnageText.text = $"COST: ¢{Fields.FormattedDropCost}   WEIGHT: {Fields.LanceTonnage}";
                 }
             } catch (Exception e) {
                 Logger.LogError(e);
