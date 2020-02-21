@@ -38,6 +38,9 @@ namespace DropCostPerMech
         {
             if (UnityGameInstance.BattleTechGame.Simulation != null)
             {
+                if ((DropCostPerMech.Settings.BEXCE && UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt != 42))
+                    return;
+
                 var consumedMilestones = Traverse.Create(UnityGameInstance.BattleTechGame.Simulation)
                 .Field("ConsumedMilestones").GetValue<List<string>>();
                 var consumed = consumedMilestones.Contains("milestone_111_talk_rentToOwn");
@@ -72,6 +75,9 @@ namespace DropCostPerMech
         {
             if (UnityGameInstance.BattleTechGame.Simulation != null)
             {
+                if ((DropCostPerMech.Settings.BEXCE && UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt != 42))
+                    return;
+
                 var consumedMilestones = Traverse.Create(UnityGameInstance.BattleTechGame.Simulation)
                 .Field("ConsumedMilestones").GetValue<List<string>>();
                 var consumed = consumedMilestones.Contains("milestone_111_talk_rentToOwn");
@@ -99,6 +105,9 @@ namespace DropCostPerMech
         {
             if (UnityGameInstance.BattleTechGame.Simulation != null)
             {
+                if ((DropCostPerMech.Settings.BEXCE && UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt != 42))
+                    return;
+
                 try
                 {
                     var settings = DropCostPerMech.Settings;
