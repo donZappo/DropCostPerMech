@@ -134,14 +134,30 @@ namespace DropCostPerMech
                                 lanceTonnage += (int)def.Chassis.Tonnage;
                             }
                         }
+
+                        double dropLimit = 0;
+                        if (settings.TonnageLimits)
+                        {
+                            int upgradeCount = 0;
+                            dropLimit = settings.StartingTonnage;
+                            var sim = UnityGameInstance.BattleTechGame.Simulation;
+                            foreach (var upgrade in sim.PurchasedArgoUpgrades)
+                            {
+                                if (upgrade.StartsWith("argoUpgrade_WeightLimit"))
+                                    upgradeCount++;
+                            }
+                            dropLimit = upgradeCount * settings.TonnagePerStep;
+                            freeTonnageText = $"({dropLimit} TONS FREE)";
+                        }
+                        else
+                            freeTonnageText = $"({settings.freeTonnageAmount} TONS FREE)";
+
                         if (settings.CostByTons && settings.someFreeTonnage && !settings.NewAlgorithm)
                         {
-                            freeTonnageText = $"({settings.freeTonnageAmount} TONS FREE)";
                             dropCost = Math.Max(0f, (lanceTonnage - settings.freeTonnageAmount) * settings.cbillsPerTon);
                         }
                         else if (settings.CostByTons && settings.someFreeTonnage && settings.NewAlgorithm)
                         {
-                            freeTonnageText = $"({settings.freeTonnageAmount} TONS FREE)";
                             if (lanceTonnage >= settings.freeTonnageAmount)
                             {
                                 dropCost = (lanceTonnage - settings.freeTonnageAmount) * (lanceTonnage - settings.freeTonnageAmount) * settings.cbillsPerTon / settings.freeTonnageAmount;
@@ -160,7 +176,7 @@ namespace DropCostPerMech
                         
                         TextMeshProUGUI simLanceTonnageText = (TextMeshProUGUI)ReflectionHelper.GetPrivateField(__instance, "simLanceTonnageText");
                         // longer strings interfere with messages about incorrect lance configurations
-                        simLanceTonnageText.text = $"DROP COST: \n¢{Fields.FormattedDropCost}\nWEIGHT:\n{Fields.LanceTonnage} TONS";
+                        simLanceTonnageText.text = $"¢{Fields.FormattedDropCost}\nTONS: {Fields.LanceTonnage}\nDROP LIMIT:\n{dropLimit} TONS";
                     }
                 }
                 catch (Exception e)

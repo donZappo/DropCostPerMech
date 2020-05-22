@@ -16,5 +16,8 @@ namespace DropCostPerMech
         public int freeTonnageAmount = 0;
         public bool NewAlgorithm = false;
         public bool BEXCE = false;
+        public bool TonnageLimits = false;
+        public double StartingTonnage = 200;
+        public double TonnagePerStep = 25;
     }
 }
