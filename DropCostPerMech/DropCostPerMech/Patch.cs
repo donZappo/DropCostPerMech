@@ -146,7 +146,7 @@ namespace DropCostPerMech
                                 if (upgrade.StartsWith("argoUpgrade_WeightLimit"))
                                     upgradeCount++;
                             }
-                            dropLimit = upgradeCount * settings.TonnagePerStep;
+                            dropLimit += upgradeCount * settings.TonnagePerStep;
                             freeTonnageText = $"({dropLimit} TONS FREE)";
                         }
                         else
