@@ -70,6 +70,7 @@ namespace DropCostPerMech
 
     [HarmonyPatch(typeof(Contract), "CompleteContract")]
     public static class Contract_CompleteContract {
+        [HarmonyAfter(new string[] { "com.Same.BattleTech.GalaxyAtWar" })]
 
         static void Postfix(Contract __instance)
         {
